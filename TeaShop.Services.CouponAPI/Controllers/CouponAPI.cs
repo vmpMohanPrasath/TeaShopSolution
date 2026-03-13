@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TeaShop.Services.CouponAPI.Data;
 using TeaShop.Services.CouponAPI.Models;
@@ -12,11 +13,12 @@ namespace TeaShop.Services.CouponAPI.Controllers
     {
         private readonly AppDbContext _dbContext;
         private readonly ResponseDto _responceDto;
-
-        public CouponAPI(AppDbContext dbContext)
+        private readonly IMapper _mapper;
+        public CouponAPI(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _responceDto = new ResponseDto();
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -25,7 +27,7 @@ namespace TeaShop.Services.CouponAPI.Controllers
             try
             {
                IEnumerable<Coupon> couponslst =_dbContext.Coupons.ToList();
-                _responceDto.Result = couponslst;
+                _responceDto.Result = _mapper.Map<IEnumerable<CouponDto>>(couponslst);
                 //return Ok(couponslst);
 
             }
@@ -47,7 +49,7 @@ namespace TeaShop.Services.CouponAPI.Controllers
             {
 
             Coupon CounonLst = _dbContext.Coupons.First(x => x.CouponId == id);
-            _responceDto.Result = CounonLst;
+                _responceDto.Result = _mapper.Map<CouponDto>(CounonLst);
                 //return Ok(CounonLst);
 
             }
@@ -63,4 +65,5 @@ namespace TeaShop.Services.CouponAPI.Controllers
         }
 
     }
+
 }
