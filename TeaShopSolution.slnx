@@ -1,5 +1,7 @@
 <Solution>
-  <Folder Name="/FrontEnd/" />
+  <Folder Name="/FrontEnd/">
+    <Project Path="TeaShop.Web/TeaShop.Web.csproj" Id="2a0bd9af-91c7-4b8c-82b7-8e583b508ac5" />
+  </Folder>
   <Folder Name="/GateWay/" />
   <Folder Name="/Integration/" />
   <Folder Name="/Services/">

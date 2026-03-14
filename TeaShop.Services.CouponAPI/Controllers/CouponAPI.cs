@@ -26,7 +26,7 @@ namespace TeaShop.Services.CouponAPI.Controllers
         {
             try
             {
-               IEnumerable<Coupon> couponslst =_dbContext.Coupons.ToList();
+                IEnumerable<Coupon> couponslst = _dbContext.Coupons.ToList();
                 _responceDto.Result = _mapper.Map<IEnumerable<CouponDto>>(couponslst);
                 //return Ok(couponslst);
 
@@ -38,7 +38,7 @@ namespace TeaShop.Services.CouponAPI.Controllers
                 _responceDto.Message = ex.Message;
             }
 
-            return _responceDto; 
+            return _responceDto;
         }
 
         [HttpGet]
@@ -48,7 +48,7 @@ namespace TeaShop.Services.CouponAPI.Controllers
             try
             {
 
-            Coupon CounonLst = _dbContext.Coupons.First(x => x.CouponId == id);
+                Coupon CounonLst = _dbContext.Coupons.First(x => x.CouponId == id);
                 _responceDto.Result = _mapper.Map<CouponDto>(CounonLst);
                 //return Ok(CounonLst);
 
@@ -60,9 +60,146 @@ namespace TeaShop.Services.CouponAPI.Controllers
                 _responceDto.Message = ex.Message;
             }
 
-            return _responceDto ;
+            return _responceDto;
 
         }
+
+        [HttpGet]
+        [Route("GetByCode/{code}")]
+        public object GetByCode(string code)
+        {
+            try
+            {
+                Coupon cou = _dbContext.Coupons.FirstOrDefault(x => x.CouponCode.ToLower() == code.ToLower());
+                if (cou == null)
+                {
+                    _responceDto.IsSUccess = false;
+                    _responceDto.Message = "Invalid Coupon Code";
+                    return _responceDto;
+                }
+                _responceDto.Result = _mapper.Map<CouponDto>(cou);
+
+
+            }
+            catch (Exception ex)
+            {
+
+                _responceDto.IsSUccess = false;
+                _responceDto.Message = ex.Message;
+            }
+
+            return _responceDto;
+        }
+
+        [HttpPost]
+
+        public object post([FromBody] CouponDto couponin)
+        {
+            try
+            {
+                Coupon obj = _mapper.Map<Coupon>(couponin);
+                _dbContext.Coupons.Add(obj);
+                _dbContext.SaveChanges();
+                _responceDto.Result = _mapper.Map<CouponDto>(obj);
+
+            }
+            catch (Exception ex)
+            {
+
+                _responceDto.IsSUccess = false;
+                _responceDto.Message = ex.Message;
+            }
+            return _responceDto;
+        }
+
+
+
+        [HttpPut]
+
+        public object put([FromBody] CouponDto couponin)
+        {
+            try
+            {
+                Coupon obj = _mapper.Map<Coupon>(couponin);
+                _dbContext.Coupons.Update(obj);
+                _dbContext.SaveChanges();
+                _responceDto.Result = _mapper.Map<CouponDto>(obj);
+
+            }
+            catch (Exception ex)
+            {
+
+                _responceDto.IsSUccess = false;
+                _responceDto.Message = ex.Message;
+            }
+            return _responceDto;
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public object Delete(int id)
+        {
+            try
+            {
+                Coupon obj = _dbContext.Coupons.First(x => x.CouponId == id);
+                _dbContext.Coupons.Remove(obj);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _responceDto.IsSUccess = false;
+                _responceDto.Message = ex.Message;
+            }
+            return _responceDto;
+        }
+
+        //_________________________________________________
+
+        [HttpPost("ADD1")]
+
+        public object Add1([FromBody] CouponDto couponin)
+        {
+            try
+            {
+                Coupon obj = _mapper.Map<Coupon>(couponin);
+                _dbContext.Coupons.Add(obj);
+                _dbContext.SaveChanges();
+                _responceDto.Result = _mapper.Map<CouponDto>(obj);
+
+            }
+            catch (Exception ex)
+            {
+
+                _responceDto.IsSUccess = false;
+                _responceDto.Message = ex.Message;
+            }
+            return _responceDto;
+        }
+
+
+
+        [HttpPost("Add2")]
+
+        public object something([FromBody] CouponDto couponin)
+        {
+            try
+            {
+                Coupon obj = _mapper.Map<Coupon>(couponin);
+                _dbContext.Coupons.Add(obj);
+                _dbContext.SaveChanges();
+                _responceDto.Result = _mapper.Map<CouponDto>(obj);
+
+            }
+            catch (Exception ex)
+            {
+
+                _responceDto.IsSUccess = false;
+                _responceDto.Message = ex.Message;
+            }
+            return _responceDto;
+        }
+
+
 
     }
 
