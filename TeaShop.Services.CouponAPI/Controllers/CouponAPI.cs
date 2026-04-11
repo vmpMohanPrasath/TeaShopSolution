@@ -7,7 +7,7 @@ using TeaShop.Services.CouponAPI.Models.Dto;
 
 namespace TeaShop.Services.CouponAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/coupon")]
     [ApiController]
     public class CouponAPI : ControllerBase
     {

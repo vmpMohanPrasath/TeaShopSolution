@@ -1,5 +1,4 @@
 ﻿using TeaShop.Web.Models;
-using TeaShop.Web.Models.Dto;
 using TeaShop.Web.Service.IService;
 using TeaShop.Web.Utility;
 
@@ -7,20 +6,21 @@ namespace TeaShop.Web.Service
 {
     public class CouponService : ICouponService
     {
-        //private readonly ICouponService _couponService;
+        private const string CouponEndpoint = "/api/coupon/";
         private readonly IBaseService _baseService;
+        
         public CouponService(IBaseService baseService)
         {
             _baseService = baseService;
         }
+        
         public async Task<ResponseDto?> CreateCouponAsync(CouponDto couponDto)
         {
             return await _baseService.SendAsync(new RequestDto
             {
                 APIType = StaticDetails.ApiType.Post,
                 Data = couponDto,
-                URL = StaticDetails.CouponAPIBase + "/api/coupon/"
-
+                URL = StaticDetails.CouponAPIBase + CouponEndpoint
             });
         }
 
@@ -29,8 +29,7 @@ namespace TeaShop.Web.Service
             return await _baseService.SendAsync(new RequestDto
             {
                 APIType = StaticDetails.ApiType.Delete,
-                URL = StaticDetails.CouponAPIBase + "/api/coupon/" + CouponId
-
+                URL = StaticDetails.CouponAPIBase + CouponEndpoint + CouponId
             });
         }
 
@@ -40,8 +39,7 @@ namespace TeaShop.Web.Service
             {
                 APIType = StaticDetails.ApiType.Put,
                 Data = couponDto,
-                URL = StaticDetails.CouponAPIBase + "/api/coupon/"
-
+                URL = StaticDetails.CouponAPIBase + CouponEndpoint
             });
         }
 
@@ -50,7 +48,7 @@ namespace TeaShop.Web.Service
             return await _baseService.SendAsync(new RequestDto
             {
                 APIType = StaticDetails.ApiType.Get,
-                URL = StaticDetails.CouponAPIBase + "/api/coupon",
+                URL = StaticDetails.CouponAPIBase + CouponEndpoint.TrimEnd('/')
             });
         }
 
@@ -59,8 +57,7 @@ namespace TeaShop.Web.Service
             return await _baseService.SendAsync(new RequestDto
             {
                 APIType = StaticDetails.ApiType.Get,
-                URL = StaticDetails.CouponAPIBase + "/api/coupon/GetByCode/" + CouponCode
-
+                URL = StaticDetails.CouponAPIBase + CouponEndpoint + "GetByCode/" + CouponCode
             });
         }
 
@@ -69,11 +66,8 @@ namespace TeaShop.Web.Service
             return await _baseService.SendAsync(new RequestDto
             {
                 APIType = StaticDetails.ApiType.Get,
-                URL = StaticDetails.CouponAPIBase + "/api/coupon/" + CouponId
-
+                URL = StaticDetails.CouponAPIBase + CouponEndpoint + CouponId
             });
         }
-
-        
     }
 }

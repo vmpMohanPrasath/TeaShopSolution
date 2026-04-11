@@ -1,4 +1,4 @@
-﻿namespace TeaShop.Web.Models.Dto
+﻿namespace TeaShop.Web.Models
 {
     public class ResponseDto
     {
